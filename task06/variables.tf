@@ -1,24 +1,24 @@
-variable "region" {
-  description = "The Azure region where resources will be created."
-  type        = string
-}
-
-variable "allowed_ip_address" {
-  description = "The IP address to allow access to SQL Server."
+variable "key_vault_name" {
+  description = "The name of the existing Key Vault"
   type        = string
 }
 
 variable "key_vault_rg_name" {
-  description = "The name of the Resource Group in which the existing Key Vault resides."
+  description = "Resource group name for the existing Key Vault"
   type        = string
 }
 
-variable "key_vault_name" {
-  description = "The name of the existing Key Vault."
+variable "region" {
+  description = "Region to deploy resources"
+  type        = string
+}
+
+variable "allowed_ip_address" {
+  description = "IP Address for firewall rules"
   type        = string
 }
 
 variable "tags" {
-  description = "Tags applied to resources"
+  description = "Tags to associate with resources"
   type        = map(string)
 }

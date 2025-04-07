@@ -7,11 +7,8 @@ terraform {
       version = ">= 3.110.0, < 4.0.0"
     }
     random = {
-      source = "hashicorp/random"
+      source  = "hashicorp/random"
+      version = ">= 3.5.1"
     }
   }
-}
-
-provider "azurerm" {
-  features {}
 }

@@ -1,28 +1,23 @@
-# Create App Service Plan (ASP)
 resource "azurerm_service_plan" "main" {
-  name                = var.asp_name
+  name                = var.app_service_plan
   resource_group_name = var.resource_group_name
-  location            = var.location
+  location            = var.region
   os_type             = "Linux"
-  sku_name            = "S1"
+  sku_name            = "P0v3"
   tags                = var.tags
 }
 
-# Create Web App
 resource "azurerm_linux_web_app" "main" {
-  name                = var.app_name
+  name                = var.web_application
   resource_group_name = var.resource_group_name
-  location            = var.location
+  location            = var.region
   service_plan_id     = azurerm_service_plan.main.id
 
   site_config {
-    # Add any specific site configurations here if needed, like:
-    # linux_fx_version = "NODE|14-lts"  # Example for Node.js
   }
 
   app_settings = {
-    "SQL_CONNECTION_STRING"    = var.sql_connection_string
-    "WEBSITE_RUN_FROM_PACKAGE" = "1" # Added as in the first example
+    "WEBSITE_RUN_FROM_PACKAGE" = "1"
   }
 
   connection_string {

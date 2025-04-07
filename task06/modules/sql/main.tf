@@ -1,58 +1,55 @@
-# Random Password for SQL Admin
-resource "random_password" "admin_password" {
+# Random Password: Generate admin password
+resource "random_password" "sql_admin_password" {
   length  = 16
   special = true
 }
 
-# SQL Server Resource
-resource "azurerm_mssql_server" "sql_server" {
+# SQL Server: Define the Azure SQL Server
+resource "azurerm_mssql_server" "main" {
   name                         = var.sql_server_name
   resource_group_name          = var.resource_group_name
-  location                     = var.location
-  administrator_login          = var.admin_username
-  administrator_login_password = random_password.admin_password.result
+  location                     = var.region
+  administrator_login          = var.sql_admin_name
+  administrator_login_password = random_password.sql_admin_password.result
+  version                      = "12.0"
 
-  version = "12.0" # Specify SQL Server version for compatibility
-  tags    = var.tags
+  tags = var.tags
 }
 
-# SQL Database Resource
-resource "azurerm_mssql_database" "sql_db" {
+# SQL Database: Create a database within the SQL Server
+resource "azurerm_mssql_database" "main" {
   name      = var.sql_db_name
-  server_id = azurerm_mssql_server.sql_server.id
-
-  sku_name = "S2" # Task-specified service model for Azure SQL Database
-  tags     = var.tags
+  server_id = azurerm_mssql_server.main.id
+  sku_name  = "S2"
+  tags      = var.tags
 }
 
-# Firewall Rule: Allow Azure Services
-resource "azurerm_sql_firewall_rule" "allow_azure_ip" {
-  name             = "AllowAzure" # Allow Azure Services to access the SQL Server
-  server_name      = azurerm_mssql_server.sql_server.name
+# SQL Firewall Rule: Allow connections from Azure services
+resource "azurerm_mssql_firewall_rule" "allow_azure_services" {
+  name             = "AllowAzureServices"
+  server_id        = azurerm_mssql_server.main.id
   start_ip_address = "0.0.0.0"
   end_ip_address   = "0.0.0.0"
 }
 
-# Firewall Rule: Allow Verification IP
-resource "azurerm_sql_firewall_rule" "allow_verification_ip" {
-  name             = "AllowVerificationIP" # Rule for specific IP access
-  server_name      = azurerm_mssql_server.sql_server.name
-  start_ip_address = var.allowed_ip_address # Verification agent IP passed as input
+# SQL Firewall Rule: Allow connections from a verification IP
+resource "azurerm_mssql_firewall_rule" "allow_verification_ip" {
+  name             = var.sql_firewall_rule_name
+  server_id        = azurerm_mssql_server.main.id
+  start_ip_address = var.allowed_ip_address
   end_ip_address   = var.allowed_ip_address
 }
 
-# Store SQL Admin Username in Azure Key Vault
-resource "azurerm_key_vault_secret" "sql_admin" {
-  name         = var.sql_admin_secret_name # Secret name for admin username
-  value        = var.admin_username        # Admin username passed as variable
-  key_vault_id = var.key_vault_id          # Key Vault ID retrieved via data block
-}
-
-# Store SQL Admin Password in Azure Key Vault
-resource "azurerm_key_vault_secret" "sql_password" {
-  name         = var.sql_password_secret_name          # Secret name for admin password
-  value        = random_password.admin_password.result # Randomly generated password
+# Store SQL Admin Name in Key Vault Secret
+resource "azurerm_key_vault_secret" "sql_admin_name" {
+  name         = var.sql_admin_name_secret
+  value        = var.sql_admin_name
   key_vault_id = var.key_vault_id
 }
 
-
+# Store SQL Admin Password in Key Vault Secret
+resource "azurerm_key_vault_secret" "sql_admin_password" {
+  name         = var.sql_admin_password_secret
+  value        = random_password.sql_admin_password.result
+  key_vault_id = var.key_vault_id
+}
