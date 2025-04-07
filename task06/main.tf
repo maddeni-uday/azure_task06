@@ -7,8 +7,8 @@ resource "azurerm_resource_group" "rg" {
 
 # Access Existing Key Vault
 data "azurerm_key_vault" "kv" {
-  name                = local.key_vault_name
-  resource_group_name = "cmaz-93253787-mod6-kv-rg"
+  name                = var.key_vault_name    # Key Vault Name from tfvars
+  resource_group_name = var.key_vault_rg_name # Key Vault Resource Group Name from tfvars
 }
 
 # SQL Module
