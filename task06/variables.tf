@@ -19,6 +19,6 @@ variable "key_vault_name" {
 }
 
 variable "tags" {
-  description = "A mapping of tags to assign to the resources."
+  description = "Tags applied to resources"
   type        = map(string)
 }

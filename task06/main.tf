@@ -33,6 +33,6 @@ module "webapp" {
   location              = var.region
   asp_name              = local.asp_name
   app_name              = local.app_name
-  sql_connection_string = module.sql.connection_string # Securely pass sensitive connection string
+  sql_connection_string = module.sql.connection_string # Pass sensitive SQL connection string
   tags                  = var.tags
 }

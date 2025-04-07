@@ -3,7 +3,7 @@ resource "azurerm_service_plan" "asp" {
   location            = var.location
   resource_group_name = var.resource_group_name
   os_type             = "Linux"
-  sku_name            = "P0v3" # Pricing Tier (task-specific)
+  sku_name            = "P0v3" # Pricing Tier from Task Parameters
 }
 
 resource "azurerm_linux_web_app" "app" {
@@ -13,13 +13,13 @@ resource "azurerm_linux_web_app" "app" {
   service_plan_id     = azurerm_service_plan.asp.id
 
   site_config {
-    always_on = true # App remains active during inactivity
+    always_on = true # Keep Web App active even when idle
   }
 
-  # Securely pass SQL connection string to app settings
+  # Inject SQL connection string securely into app settings
   app_settings = {
-    "SQL_CONNECTION_STRING" = var.sql_connection_string # Marked as sensitive in variables.tf
-    "DOTNET_VERSION"        = "8.0"                     # Runtime version (task-specific)
+    "SQL_CONNECTION_STRING" = var.sql_connection_string # Sensitive variable passed here
+    "DOTNET_VERSION"        = "8.0"                     # Task-specified .NET version
   }
 
   tags = var.tags
