@@ -1,8 +1,6 @@
 locals {
-  # Resource Name Prefix
   name_prefix = "cmaz-93253787-mod6"
 
-  # Resource names defined using Terraform functions
   rg_name                  = format("%s-%s", local.name_prefix, "rg")
   sql_server_name          = format("%s-%s", local.name_prefix, "sql")
   sql_db_name              = format("%s-%s", local.name_prefix, "sql-db")
