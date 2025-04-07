@@ -1,24 +1,30 @@
 variable "resource_group_name" {
-  type = string
+  description = "Name of the Resource Group"
+  type        = string
 }
 
 variable "location" {
-  type = string
+  description = "Azure location for the web app resource"
+  type        = string
 }
 
 variable "asp_name" {
-  type = string
+  description = "Name of the App Service Plan"
+  type        = string
 }
 
 variable "app_name" {
-  type = string
+  description = "Name of the Linux Web App"
+  type        = string
 }
 
 variable "sql_connection_string" {
-  type      = string
-  sensitive = true
+  description = "Sensitive SQL Connection String passed to the web app"
+  type        = string
+  sensitive   = true # Ensure this variable is treated as sensitive
 }
 
 variable "tags" {
-  type = map(string)
+  description = "Tags applied to all resources"
+  type        = map(string)
 }
