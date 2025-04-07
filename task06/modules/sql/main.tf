@@ -54,3 +54,5 @@ resource "azurerm_key_vault_secret" "sql_password" {
   value        = random_password.admin_password.result # Randomly generated password
   key_vault_id = var.key_vault_id
 }
+
+

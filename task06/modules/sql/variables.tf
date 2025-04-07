@@ -44,6 +44,6 @@ variable "admin_username" {
 }
 
 variable "tags" {
-  description = "Tags applied to resources"
+  description = "Tags for SQL resources"
   type        = map(string)
 }

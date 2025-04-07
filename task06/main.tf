@@ -7,8 +7,8 @@ resource "azurerm_resource_group" "rg" {
 
 # Access Existing Key Vault
 data "azurerm_key_vault" "kv" {
-  name                = var.key_vault_name    # Key Vault Name from tfvars
-  resource_group_name = var.key_vault_rg_name # Key Vault Resource Group Name from tfvars
+  name                = var.key_vault_name
+  resource_group_name = var.key_vault_rg_name
 }
 
 # SQL Module
@@ -33,6 +33,8 @@ module "webapp" {
   location              = var.region
   asp_name              = local.asp_name
   app_name              = local.app_name
-  sql_connection_string = module.sql.connection_string # Pass sensitive SQL connection string
+  sql_connection_string = module.sql.connection_string
   tags                  = var.tags
 }
+
+
