@@ -1,49 +1,49 @@
 variable "resource_group_name" {
-  description = "The name of the Resource Group where the SQL resources will be created."
+  description = "Name of the Resource Group"
   type        = string
 }
 
 variable "location" {
-  description = "The Azure location where resources will be created."
+  description = "Azure location for SQL resources"
   type        = string
 }
 
 variable "sql_server_name" {
-  description = "The name of the SQL Server resource."
+  description = "Name of the SQL Server"
   type        = string
 }
 
 variable "sql_db_name" {
-  description = "The name of the SQL Database resource."
+  description = "Name of the SQL Database"
   type        = string
 }
 
 variable "key_vault_id" {
-  description = "The ID of the Azure Key Vault where secrets will be stored."
+  description = "Azure Key Vault ID"
   type        = string
 }
 
 variable "sql_admin_secret_name" {
-  description = "The name of the Key Vault secret to store the SQL admin username."
+  description = "Key Vault secret name for the SQL admin username"
   type        = string
 }
 
 variable "sql_password_secret_name" {
-  description = "The name of the Key Vault secret to store the SQL admin password."
+  description = "Key Vault secret name for the SQL admin password"
   type        = string
 }
 
 variable "allowed_ip_address" {
-  description = "The IP address to allow access to the SQL Server."
+  description = "IP address for SQL firewall rule"
   type        = string
 }
 
 variable "admin_username" {
-  description = "The username for the SQL Server administrator."
+  description = "SQL Server administrator username"
   type        = string
 }
 
 variable "tags" {
-  description = "A mapping of tags to assign to the resources."
+  description = "Tags applied to resources"
   type        = map(string)
 }
