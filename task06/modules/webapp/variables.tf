@@ -4,7 +4,7 @@ variable "resource_group_name" {
 }
 
 variable "location" {
-  description = "Location of the Web App resources"
+  description = "Azure location for the web app resource"
   type        = string
 }
 
@@ -19,9 +19,9 @@ variable "app_name" {
 }
 
 variable "sql_connection_string" {
-  description = "Sensitive SQL Connection String for the Web App to connect to the SQL Database"
+  description = "Sensitive SQL Connection String passed to the web app"
   type        = string
-  sensitive   = true # Mark as sensitive input
+  sensitive   = true # Mark as sensitive
 }
 
 variable "tags" {
